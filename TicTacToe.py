@@ -23,8 +23,8 @@ def grid():
 # Draw the x
 def drawx(x, y):
     """Draw X player."""
-    line(x, y, x + 133, y + 133)
-    line(x, y + 133, x + 133, y)
+    line(x, y, x + 100, y + 100)
+    line(x, y + 100, x + 100, y)
 
 #Draw the o
 def drawo(x, y):
@@ -32,15 +32,15 @@ def drawo(x, y):
     up()
     goto(x + 67, y + 5)
     down()
-    circle(62)
+    circle(42)
 
 
 def floor(value):
     """Round value down to grid with square size 133."""
-    return ((value + 200) // 133) * 133 - 200
+    return ((value + 200) // 150) * 150 - 200
 
 
-state = {'player': 0}
+state = {'player': 0, 'board': [[None, None, None], [None, None, None], [None, None, None]]}
 players = [drawx, drawo]
 
 # Begins the game and the players, depending on each one, put x or o 
@@ -49,10 +49,13 @@ def tap(x, y):
     x = floor(x)
     y = floor(y)
     player = state['player']
-    draw = players[player]
-    draw(x, y)
-    update()
-    state['player'] = not player
+
+    if state['board'][int((y + 200) // 133)][int((x + 200) // 133)] is None:
+        draw = players[player]
+        draw(x, y)
+        update()
+        state['board'][int((y + 200) // 133)][int((x + 200) // 133)] = player
+        state['player'] = not player
 
 
 setup(420, 420, 370, 0)
