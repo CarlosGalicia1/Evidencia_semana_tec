@@ -91,7 +91,7 @@ def valid(point):
 def world():
     """Draw world using path."""
     bgcolor('black')
-    path.color('blue')
+    path.color('green')     # Create color of math map
 
     for index in range(len(tiles)):
         tile = tiles[index]
