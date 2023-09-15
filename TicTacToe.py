@@ -8,9 +8,11 @@ Exercises
 4. How could you create a computer player?
 """
 # Import the libraries
-from turtle import *
+from turtle import onscreenclick, up, goto, down, circle, \
+    update, setup, hideturtle, tracer, done
 
 from freegames import line
+
 
 # Draw the lines of the cat
 def grid():
@@ -20,13 +22,15 @@ def grid():
     line(-200, -67, 200, -67)
     line(-200, 67, 200, 67)
 
+
 # Draw the x
 def drawx(x, y):
     """Draw X player."""
     line(x, y, x + 100, y + 100)
     line(x, y + 100, x + 100, y)
 
-#Draw the o
+
+# Draw the o
 def drawo(x, y):
     """Draw O player."""
     up()
@@ -40,10 +44,13 @@ def floor(value):
     return ((value + 200) // 150) * 150 - 200
 
 
-state = {'player': 0, 'board': [[None, None, None], [None, None, None], [None, None, None]]}
+state = {'player': 0, 'board': [[None, None, None], [None, None, None], \
+                                 [None, None, None]]}
 players = [drawx, drawo]
 
+
 # Begins the game and the players, depending on each one, put x or o 
+
 def tap(x, y):
     """Draw X or O in tapped square."""
     x = floor(x)
