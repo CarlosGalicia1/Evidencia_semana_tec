@@ -134,11 +134,11 @@ def move():
         if valid(point + course):
             point.move(course)      # Move point if valid
         else:
-            options = [
-                vector(5, 0),
-                vector(-5, 0),
-                vector(0, 5),
-                vector(0, -5),
+            options = [         # Define movement change of ghosts
+                vector(10, 0),
+                vector(-10, 0),
+                vector(0, 10),
+                vector(0, -10),
             ]
             plan = choice(options)
             course.x = plan.x
