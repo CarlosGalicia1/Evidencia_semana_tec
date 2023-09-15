@@ -18,15 +18,15 @@ state = {'score': 0}
 path = Turtle(visible=False)
 writer = Turtle(visible=False)
 aim = vector(5, 0)
-pacman = vector(-40, -80)
-ghosts = [
+pacman = vector(-40, -80)       # Define initial location of pacman
+ghosts = [      # Define initial location of ghosts
     [vector(-180, 160), vector(5, 0)],
     [vector(-180, -160), vector(0, 5)],
     [vector(100, 160), vector(0, -5)],
     [vector(100, -160), vector(-5, 0)],
 ]
 # fmt: off
-tiles = [
+tiles = [       # Define initial map
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
     0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
@@ -56,19 +56,19 @@ def square(x, y):
     path.up()
     path.goto(x, y)
     path.down()
-    path.begin_fill()
+    path.begin_fill()       # Begin filling of the square
 
     for count in range(4):
         path.forward(20)
         path.left(90)
 
-    path.end_fill()
+    path.end_fill()         # End filling of the square
 
 
 def offset(point):
     """Return offset of point in tiles."""
-    x = (floor(point.x, 20) + 200) / 20
-    y = (180 - floor(point.y, 20)) / 20
+    x = (floor(point.x, 20) + 200) / 20         # Calculate offset in x
+    y = (180 - floor(point.y, 20)) / 20         # Calculate offset in y
     index = int(x + y * 20)
     return index
 
@@ -85,7 +85,7 @@ def valid(point):
     if tiles[index] == 0:
         return False
 
-    return point.x % 20 == 0 or point.y % 20 == 0
+    return point.x % 20 == 0 or point.y % 20 == 0       # Evaluate if current location is valid
 
 
 def world():
@@ -99,27 +99,27 @@ def world():
         if tile > 0:
             x = (index % 20) * 20 - 200
             y = 180 - (index // 20) * 20
-            square(x, y)
+            square(x, y)        # Draw blue square
 
             if tile == 1:
                 path.up()
                 path.goto(x + 10, y + 10)
-                path.dot(2, 'white')
+                path.dot(2, 'white')        # Draw dots in map
 
 
 def move():
     """Move pacman and all ghosts."""
     writer.undo()
-    writer.write(state['score'])
+    writer.write(state['score'])        # Write the current score
 
     clear()
 
     if valid(pacman + aim):
-        pacman.move(aim)
+        pacman.move(aim)        # Move player to aimed position if it is valid
 
     index = offset(pacman)
 
-    if tiles[index] == 1:
+    if tiles[index] == 1:       # Add one to score if is a white dot
         tiles[index] = 2
         state['score'] += 1
         x = (index % 20) * 20 - 200
@@ -128,11 +128,11 @@ def move():
 
     up()
     goto(pacman.x + 10, pacman.y + 10)
-    dot(20, 'yellow')
+    dot(20, 'yellow')       # Draws pac man
 
     for point, course in ghosts:
         if valid(point + course):
-            point.move(course)
+            point.move(course)      # Move point if valid
         else:
             options = [
                 vector(5, 0),
@@ -160,11 +160,11 @@ def move():
 def change(x, y):
     """Change pacman aim if valid."""
     if valid(pacman + vector(x, y)):
-        aim.x = x
-        aim.y = y
+        aim.x = x       # Relocate current aim in X
+        aim.y = y       # Relocate current aim in Y
 
 
-setup(420, 420, 370, 0)
+setup(420, 420, 370, 0)     # Create setup with fixed size
 hideturtle()
 tracer(False)
 writer.goto(160, 160)
