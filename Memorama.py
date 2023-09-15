@@ -21,6 +21,7 @@ tiles = list(range(32)) * 2
 state = {'mark': None}
 hide = [True] * 64
 tap_count = 0  # Variable to count taps, initialized to 0
+uncovered_tiles = 0  # Variable to count uncovered tiles, initialized to 0
 
 # Function to draw a square at the position (x, y).
 def square(x, y):
@@ -49,9 +50,17 @@ def update_tap_count():
     color('black')
     write(f'Taps: {tap_count}', align='center', font=('Arial', 16, 'normal'))
 
+# Function to check if all tiles have been uncovered and display a win message.
+def check_game_over():
+    if uncovered_tiles == len(tiles):
+        up()
+        goto(0, 0)
+        color('black')
+        write('You win!', align='center', font=('Arial', 30, 'normal'))
+
 # Function to handle the click event on a tile.
 def tap(x, y):
-    global tap_count
+    global tap_count, uncovered_tiles
     spot = index(x, y)
     mark = state['mark']
 
@@ -63,6 +72,8 @@ def tap(x, y):
         state['mark'] = None
         tap_count += 1
         update_tap_count()
+        uncovered_tiles += 2  # Increment the uncovered tiles for each matching pair
+        check_game_over()  # Check if all tiles have been uncovered after each valid tap
 
 # Function to draw the car image and the game tiles.
 def draw():
@@ -85,7 +96,7 @@ def draw():
         color('black')
         write(tiles[mark], font=('Arial', 30, 'normal'))
 
-    update_tap_count()  # Update the counter in each frame
+    update_tap_count()  # Update the tap count display in each frame
     update()
     ontimer(draw, 100)
 
