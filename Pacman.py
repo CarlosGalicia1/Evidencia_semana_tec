@@ -10,7 +10,8 @@ Exercises
 """
 
 from random import choice
-from turtle import *
+from turtle import Turtle, bgcolor, clear, up, goto, dot, update, ontimer, \
+    setup, hideturtle, tracer, listen, onkey, done
 
 from freegames import floor, vector
 
@@ -85,7 +86,8 @@ def valid(point):
     if tiles[index] == 0:
         return False
 
-    return point.x % 20 == 0 or point.y % 20 == 0       # Evaluate if current location is valid
+    # Evaluate if current location is valid
+    return point.x % 20 == 0 or point.y % 20 == 0
 
 
 def world():
